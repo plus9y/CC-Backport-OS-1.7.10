@@ -27,13 +27,13 @@ local function word_wrap(text, width)
 end
 
 local sFile = help.lookup(sTopic)
-local file = sFile ~= nil and io.open(sFile) or nil
+local file = sFile ~= nil and fs.open(sFile, "r") or nil
 if not file then
     printError("No help available")
     return
 end
 
-local contents = file:read("*a"):gsub("(\n *)[-*]( +)", "%1\7%2")
+local contents = file.readAll():gsub("(\n *)[-*]( +)", "%1\7%2")
 file:close()
 
 local width, height = term.getSize()
